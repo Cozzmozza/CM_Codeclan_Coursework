@@ -1,0 +1,27 @@
+
+TEXT SHORTCUTS:
+
+pwd = Show working directory
+ls = Shows what's in the directory
+cd = Change directory
+    / = Top level directory
+    .. = Parent directory
+    ~ = Home directory
+mkdir = Makes a new directory
+touch = Makes a new file
+rm = Remove file
+    -r = Remove directory
+    -f = Force Remove
+rmdir = Remove empty directory
+mv = Rename a folder/file
+cp = Copy a file 
+    -r = Copy a directory
+man = List the flags
+unzip = Unzips a zip file
+
+
+KEYBOARD SHORTCUTS:
+
+CMD + SHIFT + F = Searches entire project
+CMR + K = Clears the screen
+OPTION + LEFT OR RIGHT ARROW = Moves left/right one block at a time

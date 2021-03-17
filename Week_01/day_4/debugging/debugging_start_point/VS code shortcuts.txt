@@ -1,0 +1,8 @@
+Copy line down to the next one:
+SHIFT + OPTION + DOWN/UP
+
+Hide/Show file explorer:
+CMD + B
+
+Multiple cursors:
+OPTION + LMB
