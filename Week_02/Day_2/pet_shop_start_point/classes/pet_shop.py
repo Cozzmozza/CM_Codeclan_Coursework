@@ -31,9 +31,6 @@ class PetShop:
 
     def find_pet_by_name(self, name):
         for pet in self.pets:
-            # if self.pets.count(pet) > 0:
-            #  return pet
-        # Ally's way:
             if pet.name == name:
                 return pet
         return None
