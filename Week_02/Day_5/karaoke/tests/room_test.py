@@ -13,7 +13,6 @@ class TestRoom(unittest.TestCase):
             'song_3' : 'artist_3'
             }
         self.room = Room(1, songs)
-        self.guest = Guest('Cozza')
 
     def test_room_has_number(self): #Pass
         self.assertEqual(1, self.room.room_number)

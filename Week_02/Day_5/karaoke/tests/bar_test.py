@@ -16,8 +16,8 @@ class TestBar(unittest.TestCase):
             'Delete me' : 'ASAP'
             }
         room = Room(1, songs) #We are working with room 1, which has the songs above as default. The room also has an a guest list
-
-        self.bar = Bar('Screeching Soul Tavern', room)
+        till_cash = 500
+        self.bar = Bar('Screeching Soul Tavern', room, till_cash)
 
     def test_bar_has_name(self): #Pass
         self.assertEqual('Screeching Soul Tavern', self.bar.bar_name)
@@ -40,25 +40,49 @@ class TestBar(unittest.TestCase):
         self.assertEqual([], self.bar.room.guest_list)
 
     def test_can_add__one_guest(self): #Pass
-        guest = Guest('Cozza')
+        guest = Guest('Cozza', 18.50)
         self.bar.add_guest(guest)
         self.assertEqual(1, len(self.bar.room.guest_list))
 
     def test_can_add_upto_4_guests(self):
-        guests = [Guest('Cozza'), Guest('Mozza'), Guest('Tozza'), Guest('Lozza')]
+        guests = [Guest('Cozza', 18.50), Guest('Mozza', 12.00), Guest('Tozza', 25.00), Guest('Lozza', 16.73)]
         for guest in guests:
             self.bar.add_guest(guest)
         self.assertEqual(4, len(self.bar.room.guest_list))
     
-    def test_can_not_add_guests_if_full(self): #Pass
-        guests = [Guest('Cozza'), Guest('Mozza'), Guest('Tozza'), Guest('Lozza'), Guest('Pozza')]
+    def test_can_not_add_guests_if_full(self):                  #Pass
+        guests = [Guest('Cozza', 18.50), Guest('Mozza', 12.00), Guest('Tozza', 25.00), Guest('Lozza', 16.73), Guest('Pozza', 109.20)]
         for guest in guests:
             self.bar.add_guest(guest)
         self.assertEqual('Sorry, this room is at full capacity', self.bar.add_guest(guest))
 
-    def test_can_remove_guest(self): #Pass
-        guest = Guest('Cozza')
+    def test_can_remove_guest(self):                            #Pass
+        guest = Guest('Cozza', 18.50)
         self.bar.add_guest(guest) 
         self.bar.remove_guest(guest)
         self.assertEqual(0, len(self.bar.room.guest_list))
    
+    def test_bar_can_call_customer_wallet_reduce(self):         #Pass
+        guest = Guest('Cozza', 18.50)
+        self.bar.remove_cash_from_guest(guest)
+        self.assertEqual(8.50, guest.wallet_balance)
+    
+    def test_bar_can_add_cash_to_till_for_a_sale(self):         #Pass
+        self.bar.add_cash_to_till_by_one_sale()
+        self.assertEqual(510, self.bar.till_cash)
+        
+    def test_bar_can_remove_cash_from_till(self):               #Pass
+        amount = 150
+        self.bar.remove_from_till(amount)
+        self.assertEqual(350, self.bar.till_cash)
+    
+    def test_bar_can_make_a_karaoke_room_sale_to_4_people(self):
+        # Test to see if the bar can take in 4 guests with varied wallets, and make 4 sales
+         guests = [Guest('Cozza', 18.50), Guest('Mozza', 12.00), Guest('Tozza', 25.00), Guest('Lozza', 16.73)]
+         self.bar.sell_to_group_of_guests(guests)
+         self.assertEqual(8.50, guests[0].wallet_balance)       #Pass
+         self.assertEqual(2.00, guests[1].wallet_balance)       #Pass
+         self.assertEqual(15.00, guests[2].wallet_balance)      #Pass
+         self.assertEqual(6.73, guests[3].wallet_balance)       #Pass
+         self.assertEqual(540, self.bar.till_cash)              #Pass
+         self.assertEqual(4, len(self.bar.room.guest_list))     #Pass
